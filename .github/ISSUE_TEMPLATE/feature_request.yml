@@ -1,0 +1,50 @@
+name: Feature Request
+description: Propose a new feature or improvement
+labels: ["feature", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a feature. The more context you provide, the easier it is to evaluate.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      description: Which part of Apriora would this affect?
+      options:
+        - Web (apps/web)
+        - Mobile (apps/mobile)
+        - API (apps/api)
+        - Shared package
+        - Infrastructure / CI
+        - Cross-cutting
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What problem does this solve, or what opportunity does it create?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How should this work? Include UI sketches, API shapes, or user flows if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches did you consider and why did you rule them out?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
