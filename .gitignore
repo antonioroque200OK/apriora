@@ -3,7 +3,8 @@ node_modules
 .pnp
 .pnp.*
 
-# pnpm — lockfile is committed; debug log is not
+# pnpm — lockfile is committed; debug log and local store are not
+.pnpm-store/
 # build outputs
 .next/
 out/
