@@ -2,7 +2,7 @@
 
 > **Phase:** 3 — Software Architecture
 
-This directory will contain the Apriora software architecture documents once Phase 3 is complete.
+This directory will contain the Kyvio software architecture documents once Phase 3 is complete.
 
 ## Planned documents
 

@@ -2,7 +2,7 @@
 
 > **Phase:** 5 — Roadmap
 
-This directory will contain the Apriora product and engineering roadmap once Phase 5 is complete.
+This directory will contain the Kyvio product and engineering roadmap once Phase 5 is complete.
 
 Expected contents:
 

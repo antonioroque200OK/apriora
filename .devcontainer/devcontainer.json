@@ -1,12 +1,12 @@
 {
-  "name": "Apriora",
+  "name": "Kyvio",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "onCreateCommand": "sudo corepack enable && corepack use pnpm@10 && pnpm install",
-  "postCreateCommand": "pnpm --filter @apriora/web run build || true",
+  "postCreateCommand": "pnpm --filter @kyvio/web run build || true",
   "customizations": {
     "vscode": {
       "extensions": [

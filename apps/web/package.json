@@ -1,5 +1,5 @@
 {
-  "name": "@apriora/web",
+  "name": "@kyvio/web",
   "version": "0.0.1",
   "type": "module",
   "private": true,
@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@apriora/shared": "workspace:*",
+    "@kyvio/shared": "workspace:*",
     "@base-ui/react": "^1.6.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

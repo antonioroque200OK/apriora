@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-# Apriora
+# Kyvio
 
 ## Project Overview
 
-Apriora is a Brazilian gamified learning platform inspired by Kahoot, designed to provide a more pedagogical, teacher-friendly and student-friendly experience for Brazilian educational institutions.
+Kyvio is a Brazilian gamified learning platform inspired by Kahoot, designed to provide a more pedagogical, teacher-friendly and student-friendly experience for Brazilian educational institutions.
 
 The platform combines live classroom interaction, gamification, collaborative learning and detailed pedagogical reporting.
 
@@ -14,7 +14,7 @@ The project consists of three primary applications:
 - Mobile application for students (and potentially teachers in future versions).
 - Backend API responsible for authentication, quizzes, realtime sessions, rankings and reports.
 
-Apriora follows a **Specification-Driven Development** approach.
+Kyvio follows a **Specification-Driven Development** approach.
 
 Product understanding always precedes implementation.
 

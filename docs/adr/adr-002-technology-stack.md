@@ -8,7 +8,7 @@
 
 ## Context
 
-Apriora requires a full-stack technology selection covering:
+Kyvio requires a full-stack technology selection covering:
 
 - Web frontend framework
 - Mobile framework
@@ -69,7 +69,7 @@ Additionally, this ADR evaluates **tRPC** as a potential API layer, since it is 
 - **Flutter:** Excellent performance and cross-platform consistency. Requires Dart — adds a second language to the stack and breaks code sharing with the web TypeScript codebase. Rejected.
 - **Ionic / Capacitor:** Web-view-based. Acceptable DX but inferior performance and native feel for a real-time interactive application. Rejected.
 
-**Styling — NativeWind 4:** Mobile styling uses NativeWind 4 (Tailwind syntax compiled to React Native `StyleSheet`s), mirroring Tailwind CSS 4 on web. The goal is not component sharing between web and mobile — DOM and React Native render trees are fundamentally different — but **design-language sharing**: colors, typography, spacing, radius, and shadows defined once and consumed by both Tailwind (web) and NativeWind (mobile) configs. This keeps the two surfaces visually consistent without forcing a cross-platform component abstraction. As of Phase 0, NativeWind is not yet installed in `apps/mobile`; the dependency, native `tailwind.config`, and `babel.config.js` plugin wiring are scaffolding work for Phase 3 (Software Architecture), alongside the shared design tokens described in `@apriora/ui` (see [engineering-foundation.md §6](../foundation/engineering-foundation.md#6-shared-packages)).
+**Styling — NativeWind 4:** Mobile styling uses NativeWind 4 (Tailwind syntax compiled to React Native `StyleSheet`s), mirroring Tailwind CSS 4 on web. The goal is not component sharing between web and mobile — DOM and React Native render trees are fundamentally different — but **design-language sharing**: colors, typography, spacing, radius, and shadows defined once and consumed by both Tailwind (web) and NativeWind (mobile) configs. This keeps the two surfaces visually consistent without forcing a cross-platform component abstraction. As of Phase 0, NativeWind is not yet installed in `apps/mobile`; the dependency, native `tailwind.config`, and `babel.config.js` plugin wiring are scaffolding work for Phase 3 (Software Architecture), alongside the shared design tokens described in `@kyvio/ui` (see [engineering-foundation.md §6](../foundation/engineering-foundation.md#6-shared-packages)).
 
 **Alternatives considered (styling):**
 
@@ -102,7 +102,7 @@ Additionally, this ADR evaluates **tRPC** as a potential API layer, since it is 
 - Live quiz sessions require bidirectional communication: server pushes question reveals, countdowns, scores; clients push answers.
 - Socket.IO provides rooms (session isolation), fallback transports (WebSocket → polling), and automatic reconnection.
 - NestJS has a first-class `@WebSocketGateway` decorator for Socket.IO.
-- `socket.io-client` is available for both React (web) and React Native (mobile) via `@apriora/api-client`.
+- `socket.io-client` is available for both React (web) and React Native (mobile) via `@kyvio/api-client`.
 
 **Alternatives considered:**
 
@@ -134,7 +134,7 @@ Additionally, this ADR evaluates **tRPC** as a potential API layer, since it is 
 **Rationale:**
 
 - Zod schemas compile to TypeScript types — define the shape once, validate at runtime and use as static type simultaneously.
-- Works in both NestJS (via `ZodPipe`) and the shared package (schema definitions in `@apriora/shared`).
+- Works in both NestJS (via `ZodPipe`) and the shared package (schema definitions in `@kyvio/shared`).
 - Widely adopted, excellent developer experience.
 
 **Note:** NestJS's native `class-validator` + `class-transformer` uses decorators and reflection metadata. Zod is preferred because it avoids the `reflect-metadata` requirement for validation and integrates better with the monorepo's type-sharing strategy.
@@ -188,14 +188,14 @@ tRPC is a TypeScript RPC framework that creates end-to-end type-safe APIs withou
 
 ### Disadvantages
 
-- **TypeScript-only clients.** The API is not consumable by non-TypeScript clients (Python scripts, third-party integrations, mobile apps without the tRPC client, browser fetch). If Apriora ever needs to expose a REST API for LMS integrations, Webhooks, or partner access, tRPC provides no path forward without wrapping or duplicating the API.
+- **TypeScript-only clients.** The API is not consumable by non-TypeScript clients (Python scripts, third-party integrations, mobile apps without the tRPC client, browser fetch). If Kyvio ever needs to expose a REST API for LMS integrations, Webhooks, or partner access, tRPC provides no path forward without wrapping or duplicating the API.
 - **Tight coupling.** The server and client are coupled at the type level. This is a feature in pure internal systems but becomes a constraint when the API needs to serve external consumers.
 - **NestJS incompatibility.** This is the critical blocker. tRPC is designed for Express/Next.js-style server handlers (a function that takes a request and returns a response). NestJS has its own DI container, module system, guard/interceptor pipeline, and lifecycle. Integrating tRPC with NestJS requires:
   - Abandoning NestJS's native request pipeline (guards, interceptors, pipes) in favour of tRPC middleware.
   - Using the unofficial `nestjs-trpc` package, which has inconsistent maintenance and is not officially supported.
   - Or running tRPC outside NestJS in a separate process, which negates the DI and module benefits.
 - **Real-time limitations.** tRPC has WebSocket subscription support, but it is designed for subscriptions, not bidirectional event-driven communication. Live quiz sessions require server-initiated events (question reveal, countdown, score reveal) and client-initiated events (answer submission) with room-based targeting. Socket.IO's gateway model in NestJS is a far better fit.
-- **External integration capability.** Apriora may need to integrate with Brazilian LMS platforms (Google Classroom, Moodle), external identity providers, or reporting webhooks. REST/HTTP endpoints are the universal integration interface. tRPC does not naturally expose these.
+- **External integration capability.** Kyvio may need to integrate with Brazilian LMS platforms (Google Classroom, Moodle), external identity providers, or reporting webhooks. REST/HTTP endpoints are the universal integration interface. tRPC does not naturally expose these.
 
 ### Compatibility Summary
 
@@ -207,16 +207,16 @@ tRPC is a TypeScript RPC framework that creates end-to-end type-safe APIs withou
 | Real-time (Socket.IO) | Not applicable — tRPC subscriptions are different |
 | External REST consumers | Poor — no native REST exposure |
 
-### Alternative: Typed REST with `@apriora/shared`
+### Alternative: Typed REST with `@kyvio/shared`
 
 The monorepo already solves the primary problem tRPC addresses — type sharing between server and client.
 
 **Approach:**
 
 1. NestJS controllers define HTTP endpoints in the conventional REST style.
-2. Response types are defined in `@apriora/shared` (Zod schemas + TypeScript types).
-3. `@apriora/api-client` wraps `fetch` with the correct types, imported from `@apriora/shared`.
-4. Both `apps/web` and `apps/mobile` use `@apriora/api-client` — the types flow through the monorepo without RPC coupling.
+2. Response types are defined in `@kyvio/shared` (Zod schemas + TypeScript types).
+3. `@kyvio/api-client` wraps `fetch` with the correct types, imported from `@kyvio/shared`.
+4. Both `apps/web` and `apps/mobile` use `@kyvio/api-client` — the types flow through the monorepo without RPC coupling.
 
 This approach preserves:
 - NestJS's full capability (guards, interceptors, pipes, WebSocket gateways).
@@ -230,9 +230,9 @@ And it eliminates:
 
 ### Conclusion
 
-**tRPC should not be adopted** for Apriora in its current architecture because NestJS incompatibility is a hard constraint, real-time requirements are better served by Socket.IO, and external integration requirements demand a standard HTTP/REST interface.
+**tRPC should not be adopted** for Kyvio in its current architecture because NestJS incompatibility is a hard constraint, real-time requirements are better served by Socket.IO, and external integration requirements demand a standard HTTP/REST interface.
 
-The type-sharing problem that tRPC solves is already addressed by the `@apriora/shared` + `@apriora/api-client` packages.
+The type-sharing problem that tRPC solves is already addressed by the `@kyvio/shared` + `@kyvio/api-client` packages.
 
 **Revisit only if:**
 - NestJS is replaced by a framework more compatible with tRPC (e.g., Hono, Express).
