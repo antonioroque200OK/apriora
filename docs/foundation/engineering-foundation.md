@@ -144,6 +144,7 @@ apriora/
 | React Native 0.79 | Cross-platform native UI |
 | Expo SDK 53 | Managed workflow, build toolchain |
 | Expo Router 5 | File-based navigation |
+| NativeWind 4 | Styling (Tailwind syntax on RN) — not yet installed, see §6 |
 | TypeScript | Type safety |
 
 ### 4.4 API (`apps/api`)
@@ -232,13 +233,15 @@ Shared tooling configuration:
 - `tsconfig/react-native.json` — extends base for React Native
 - `biome/base.json` — extends root `biome.json` (for per-package overrides if needed)
 
-### `@apriora/ui` — Deferred
+### `@apriora/ui` — Deferred (components), Planned (design tokens)
 
-**Decision:** Do not implement a shared UI package at this stage.
+**Decision:** Do not implement shared *components* at this stage.
 
 `apps/web` uses Tailwind CSS + shadcn/ui, which are DOM-specific. `apps/mobile` uses React Native, which has no DOM. Bridging these requires non-trivial abstractions (React Native Web, component file splitting, or a design-token-only layer). None of these are justified before the product design is established.
 
-**Re-evaluate in Phase 3** (Software Architecture) once concrete screens exist and patterns emerge. If shared logic is identified at that point, extract it then.
+**Re-evaluate component sharing in Phase 3** (Software Architecture) once concrete screens exist and patterns emerge. If shared logic is identified at that point, extract it then.
+
+**Design-token sharing is still the intended strategy**, independent of component sharing: colors, typography, spacing, radius, and shadows defined once in `@apriora/ui` and consumed by Tailwind CSS 4 (web) and NativeWind 4 (mobile) configs — see [ADR-002 §1.3](../adr/adr-002-technology-stack.md). Not yet scaffolded: `apps/mobile` has no NativeWind dependency, no native `tailwind.config`, and `packages/ui/src/index.ts` is an empty stub. This is Phase 3 scaffolding work, not a Phase 0 gap left unaddressed by oversight.
 
 ---
 

@@ -69,6 +69,13 @@ Additionally, this ADR evaluates **tRPC** as a potential API layer, since it is 
 - **Flutter:** Excellent performance and cross-platform consistency. Requires Dart — adds a second language to the stack and breaks code sharing with the web TypeScript codebase. Rejected.
 - **Ionic / Capacitor:** Web-view-based. Acceptable DX but inferior performance and native feel for a real-time interactive application. Rejected.
 
+**Styling — NativeWind 4:** Mobile styling uses NativeWind 4 (Tailwind syntax compiled to React Native `StyleSheet`s), mirroring Tailwind CSS 4 on web. The goal is not component sharing between web and mobile — DOM and React Native render trees are fundamentally different — but **design-language sharing**: colors, typography, spacing, radius, and shadows defined once and consumed by both Tailwind (web) and NativeWind (mobile) configs. This keeps the two surfaces visually consistent without forcing a cross-platform component abstraction. As of Phase 0, NativeWind is not yet installed in `apps/mobile`; the dependency, native `tailwind.config`, and `babel.config.js` plugin wiring are scaffolding work for Phase 3 (Software Architecture), alongside the shared design tokens described in `@apriora/ui` (see [engineering-foundation.md §6](../foundation/engineering-foundation.md#6-shared-packages)).
+
+**Alternatives considered (styling):**
+
+- **StyleSheet API (bare React Native):** No external dependency, but no shared vocabulary with the web Tailwind classes — two completely separate styling languages to maintain. Rejected.
+- **Tamagui / Restyle:** Cross-platform component libraries with their own design-token systems. Heavier adoption cost and would compete with shadcn/ui's conventions on web rather than complementing them. Rejected for now; revisit only if NativeWind's token-sharing proves insufficient.
+
 ### 1.4 Backend: NestJS 11 + Fastify Adapter
 
 **Chosen:** NestJS 11, Fastify adapter.

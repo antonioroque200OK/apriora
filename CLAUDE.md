@@ -6,44 +6,128 @@
 
 Apriora is a Brazilian gamified learning platform inspired by Kahoot, designed to provide a more pedagogical, teacher-friendly and student-friendly experience for Brazilian educational institutions.
 
-The project includes:
+The platform combines live classroom interaction, gamification, collaborative learning and detailed pedagogical reporting.
 
-* Web application
-* Mobile application
-* Backend API
+The project consists of three primary applications:
 
-The project follows Specification-Driven Development.
+- Web application for teachers and administrators.
+- Mobile application for students (and potentially teachers in future versions).
+- Backend API responsible for authentication, quizzes, realtime sessions, rankings and reports.
 
-Implementation must always be driven by documented decisions.
+Apriora follows a **Specification-Driven Development** approach.
+
+Product understanding always precedes implementation.
+
+Documentation is considered part of the product.
 
 ---
 
-# Engineering Principles
+# Engineering Philosophy
+
+The repository is intended to evolve for many years.
+
+Maintainability is always preferred over short-term convenience.
 
 Before implementing any meaningful change:
 
-1. Inspect the existing implementation.
-2. Understand the current architecture.
-3. Explain observations.
-4. Present viable alternatives whenever appropriate.
-5. Explain trade-offs.
-6. Justify the chosen approach.
-7. Document the decision.
-8. Implement.
+1. Verify the current Git Worktree.
+2. Verify the current branch.
+3. Verify the GitHub Issue associated with the current work.
+4. Inspect the existing implementation.
+5. Understand the current architecture.
+6. Explain observations.
+7. Present viable alternatives whenever appropriate.
+8. Explain trade-offs.
+9. Justify the chosen solution.
+10. Update documentation when necessary.
+11. Implement.
 
-Prefer incremental improvements.
+Never:
 
-Avoid destructive rewrites.
+- guess architectural intent;
+- rewrite large portions of the project without justification;
+- refactor unrelated code;
+- introduce technologies simply because they are popular.
 
-Avoid assumptions.
+Prefer:
 
-Never refactor unrelated code.
+- incremental improvements;
+- explicit code;
+- predictable behavior;
+- maintainability.
+
+---
+
+# Technology Stack
+
+## Monorepo
+
+- pnpm Workspaces
+- Turborepo
+
+---
+
+## Web
+
+- Next.js 16
+- App Router
+- TypeScript
+- Turbopack
+- Tailwind CSS
+- shadcn/ui
+
+---
+
+## Mobile
+
+- React Native
+- Expo
+- TypeScript
+
+---
+
+## Backend
+
+- NestJS
+- Fastify Adapter
+- Socket.IO
+- Prisma ORM
+- PostgreSQL
+- Zod
+- JWT Authentication
+
+---
+
+## Tooling
+
+- Biome
+- GitHub Actions
+- Dev Container
+
+---
+
+## Deployment
+
+Development
+
+- Dev Container
+
+Initial Deployment
+
+- Vercel
+- Render
+- Neon PostgreSQL
+
+Future Deployment
+
+- VPS
 
 ---
 
 # Repository Structure
 
-```text
+```
+
 apps/
     web/
     mobile/
@@ -64,103 +148,135 @@ docs/
     adr/
 
 .github/
+
 .devcontainer/
+
 .claude/
+
 ```
 
----
+This structure should remain stable.
 
-# Technology Stack
-
-## Monorepo
-
-* pnpm Workspaces
-* Turborepo
-
-## Web
-
-* Next.js 16
-* Turbopack
-* App Router
-* Tailwind CSS
-* shadcn/ui
-
-## Mobile
-
-* React Native
-* Expo
-
-## Backend
-
-* NestJS
-* Fastify
-* Socket.IO
-* Prisma
-* PostgreSQL
-* Zod
-* JWT
-
-## Tooling
-
-* Biome
-* GitHub Actions
-* Dev Container
-
-## Deployment
-
-* Vercel
-* Render
-* Neon PostgreSQL
+Large reorganizations must be documented through an ADR.
 
 ---
 
 # Documentation Strategy
 
-Documentation responsibilities are strictly separated.
+Each documentation directory has a single responsibility.
 
-```
-docs/
+## docs/foundation
 
-foundation/
-engineering-foundation.md
+Repository engineering decisions.
 
-prd/
+Contains:
 
-README.md
-
-architecture/
-
-README.md
-frontend.md
-backend.md
-database.md
-realtime.md
-deployment.md
-
-domain/
-
-README.md
-
-roadmap/
-
-README.md
-
-adr/
-
-adr-001-monorepo-and-workflow.md
-adr-002-technology-stack.md
-```
-
-Never mix:
-
-* engineering decisions;
-* product decisions;
-* architectural decisions;
-* domain decisions.
+- engineering-foundation.md
 
 ---
 
-# Development Workflow
+## docs/prd
+
+Product Requirements Documentation.
+
+Defines:
+
+- product vision
+- users
+- requirements
+- features
+- acceptance criteria
+
+---
+
+## docs/architecture
+
+Technical architecture.
+
+Expected files:
+
+- README.md
+- frontend.md
+- backend.md
+- realtime.md
+- database.md
+- deployment.md
+
+---
+
+## docs/domain
+
+Business domain.
+
+Contains:
+
+- entities
+- aggregates
+- business rules
+- state transitions
+
+---
+
+## docs/roadmap
+
+Product evolution.
+
+Contains:
+
+- MVP
+- V1
+- V2
+- backlog
+
+---
+
+## docs/adr
+
+Architecture Decision Records.
+
+Expected:
+
+- ADR-001 — Monorepo and Development Workflow
+- ADR-002 — Technology Stack
+
+Future architectural decisions must be recorded here.
+
+---
+
+# Documentation Rules
+
+Never mix responsibilities.
+
+Engineering belongs in:
+
+- Foundation
+- ADRs
+
+Product belongs in:
+
+- PRD
+
+Business logic belongs in:
+
+- Domain
+
+Technical implementation belongs in:
+
+- Architecture
+
+Project planning belongs in:
+
+- Roadmap
+
+Documentation is part of the implementation.
+
+Whenever implementation changes architecture, documentation must also change.
+
+---
+
+# Development Lifecycle
+
+Every feature should follow the same lifecycle.
 
 Engineering Foundation
 
@@ -192,224 +308,8 @@ Implementation
 
 Review
 
-Implementation never precedes understanding.
+↓
 
----
+Release
 
-# Branch Strategy
-
-Production
-
-```
-main
-```
-
-Homologation
-
-```
-staging
-```
-
-Development
-
-```
-feature-<feature>
-```
-
----
-
-# Pull Request Workflow
-
-Default workflow:
-
-```
-feature-* → staging → main
-```
-
-Use this workflow unless the Direct Merge Policy applies.
-
----
-
-# Direct Merge Policy
-
-The project owner permanently delegates authority to Claude Code to commit directly to `main` whenever the pending changes clearly qualify as low-risk repository maintenance.
-
-Claude does **not** need to request additional authorization for changes covered by this policy.
-
-Direct commits to `main` are permitted when **all** of the following are true:
-
-* the change does not modify product behavior;
-* the change does not modify runtime behavior;
-* the change does not modify public APIs;
-* the change does not modify database schema;
-* the change does not modify authentication or authorization behavior;
-* the change does not modify production deployment behavior;
-* the change is limited to repository maintenance, tooling, documentation or development environment.
-
-Examples that MAY be committed directly to `main`:
-
-* README updates;
-* CLAUDE.md updates;
-* documentation improvements;
-* ADR formatting;
-* comments;
-* Biome formatting;
-* repository metadata;
-* package metadata;
-* GitHub templates;
-* GitHub labels;
-* Issue templates;
-* Pull Request templates;
-* package manager housekeeping;
-* Corepack housekeeping;
-* pnpm housekeeping;
-* Dev Container maintenance;
-* devcontainer-lock.json updates;
-* VS Code extension list updates;
-* editor configuration;
-* CI syntax fixes that do not alter production behavior.
-
-Examples that MUST use the standard workflow:
-
-* product features;
-* bug fixes affecting runtime behavior;
-* API behavior changes;
-* authentication changes;
-* authorization changes;
-* deployment changes;
-* infrastructure changes;
-* monorepo restructuring;
-* package restructuring;
-* architectural changes;
-* dependency upgrades with runtime impact;
-* database schema changes;
-* destructive refactors.
-
-When uncertain, assume the change is **not** low-risk.
-
-Follow:
-
-```
-feature-* → staging → main
-```
-
-Before every direct commit to `main`, Claude must explain:
-
-* why the change qualifies;
-* why no runtime behavior is affected;
-* which files were modified;
-* which checks were executed.
-
----
-
-# Coding Standards
-
-Prioritize:
-
-* readability;
-* maintainability;
-* explicitness;
-* simplicity.
-
-Avoid:
-
-* unnecessary abstractions;
-* premature optimization;
-* duplicated code.
-
-Follow existing conventions.
-
----
-
-# Architecture Rules
-
-Inspect before modifying.
-
-Preserve useful Kombai-generated UI whenever practical.
-
-Never introduce a technology without documenting the rationale.
-
-Whenever multiple viable solutions exist:
-
-* explain alternatives;
-* explain trade-offs;
-* justify the chosen solution;
-* document the decision.
-
----
-
-# Code Sharing
-
-Prefer shared code whenever it improves maintainability.
-
-Use:
-
-`packages/shared`
-
-for:
-
-* shared types;
-* enums;
-* constants;
-* Zod schemas;
-* business rules;
-* utilities.
-
-Use:
-
-`packages/api-client`
-
-for:
-
-* HTTP client;
-* Socket.IO client;
-* DTOs;
-* API abstractions.
-
-Evaluate shared UI carefully.
-
-Do not force sharing where it reduces clarity.
-
----
-
-# Documentation Rules
-
-Whenever architecture changes:
-
-* update ADRs;
-* update architecture documentation;
-* keep implementation and documentation synchronized.
-
-Documentation is part of the implementation.
-
----
-
-# Claude Working Process
-
-Before modifying code:
-
-* inspect;
-* understand;
-* explain;
-* justify;
-* implement.
-
-Keep changes focused.
-
-Avoid unrelated refactors.
-
-Explain important architectural decisions.
-
----
-
-# Definition of Done
-
-A task is complete only when:
-
-* implementation is finished;
-* Biome passes;
-* type checking passes;
-* build succeeds;
-* documentation is updated;
-* ADRs are updated when required;
-* no unrelated refactors were introduced.
+Implementation must never precede understanding.
