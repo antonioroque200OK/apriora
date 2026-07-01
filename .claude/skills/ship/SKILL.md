@@ -18,6 +18,13 @@ está ativo (nem admin pula os checks). Todo merge passa por PR.
    - `git status` e `git diff` (staged + unstaged) para confirmar o escopo.
    - Se houver mudanças não relacionadas ao pedido do usuário, não incluí-las — pergunte
      antes de misturar escopos no mesmo commit.
+   - Exceção: mudanças cosméticas/documentais que não afetam o comportamento da
+     aplicação (docs, skills, comentários, config sem impacto em build/runtime) podem
+     ser agrupadas num único commit/PR mesmo que toquem arquivos diferentes, em vez de
+     um PR por arquivo — o custo de um PR (branch, checks, merge) não se paga para
+     esse tipo de mudança. Na dúvida se algo é "cosmético" (ex.: mexe em código de
+     `apps/*` ou `packages/*` que roda em produção), tratar como não-cosmético e não
+     agrupar.
 
 2. **Commitar**
    - Seguir as convenções já descritas no `CLAUDE.md`/system prompt (mensagem objetiva
@@ -48,6 +55,9 @@ está ativo (nem admin pula os checks). Todo merge passa por PR.
    - `gh pr checks <numero> --watch --interval 15` (ou polling equivalente) até todos os
      checks obrigatórios saírem de `pending`.
    - Não seguir em frente enquanto houver check `pending`.
+   - Não colar o log bruto de cada refresh do `--watch` na resposta ao usuário — deixar
+     rodar em background/silenciosamente e só reportar o resultado final (passou/falhou
+     e quais checks), não o histórico de polling.
 
 7. **Se algum check falhar — corrigir, até 3 tentativas**
    - Ler o log do job que falhou (`gh run view <run-id> --job <job-id> --log` ou
