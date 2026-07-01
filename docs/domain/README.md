@@ -2,7 +2,7 @@
 
 > **Phase:** 4 — Domain Model
 
-This directory will contain the Apriora domain model and ubiquitous language glossary once Phase 4 is complete.
+This directory will contain the Kyvio domain model and ubiquitous language glossary once Phase 4 is complete.
 
 Expected contents:
 

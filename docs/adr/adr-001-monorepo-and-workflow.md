@@ -8,7 +8,7 @@
 
 ## Context
 
-Apriora ships three interdependent surfaces: a Next.js web app, a React Native mobile app, and a NestJS backend API. These surfaces share domain types, an HTTP/WebSocket client library, and tooling configuration.
+Kyvio ships three interdependent surfaces: a Next.js web app, a React Native mobile app, and a NestJS backend API. These surfaces share domain types, an HTTP/WebSocket client library, and tooling configuration.
 
 We needed to decide:
 
@@ -27,7 +27,7 @@ We use a single repository with **pnpm workspaces** to manage all apps and packa
 
 **Why monorepo:**
 
-- Domain types defined in `@apriora/shared` are immediately available to all surfaces without publishing or versioning overhead.
+- Domain types defined in `@kyvio/shared` are immediately available to all surfaces without publishing or versioning overhead.
 - Refactoring across surfaces (e.g., renaming a DTO field) is atomic — one commit, one PR, one CI run.
 - A single CI pipeline validates the entire system.
 - Developers work in one checkout and one IDE window.

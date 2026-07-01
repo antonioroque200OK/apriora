@@ -1,4 +1,4 @@
-# Engineering Foundation — Apriora
+# Engineering Foundation — Kyvio
 
 **Phase:** 0 — Foundation
 **Date:** 2026-06-25
@@ -8,7 +8,7 @@
 
 ## 1. Project Overview
 
-Apriora is a Brazilian gamified learning platform inspired by Kahoot, designed to be more pedagogical, more teacher-friendly, and better aligned with Brazilian educational workflows.
+Kyvio is a Brazilian gamified learning platform inspired by Kahoot, designed to be more pedagogical, more teacher-friendly, and better aligned with Brazilian educational workflows.
 
 It ships as three surfaces:
 
@@ -70,7 +70,7 @@ CI enforces all of the above automatically.
 ## 3. Repository Structure
 
 ```text
-apriora/
+kyvio/
 ├── .devcontainer/      # Unified development environment (Dev Container)
 ├── .github/
 │   ├── workflows/      # GitHub Actions CI
@@ -144,6 +144,7 @@ apriora/
 | React Native 0.79 | Cross-platform native UI |
 | Expo SDK 53 | Managed workflow, build toolchain |
 | Expo Router 5 | File-based navigation |
+| NativeWind 4 | Styling (Tailwind syntax on RN) — not yet installed, see §6 |
 | TypeScript | Type safety |
 
 ### 4.4 API (`apps/api`)
@@ -211,19 +212,19 @@ Root `biome.json`:
 
 ## 6. Shared Packages
 
-### `@apriora/shared`
+### `@kyvio/shared`
 
 The canonical source for domain types, enums, constants, Zod schemas, business-rule helpers, and utilities. Both `apps/web` and `apps/mobile` import from here. The API (`apps/api`) will also share types with this package to keep contracts explicit.
 
-**Rule:** If a type or constant is used by more than one app or package, it belongs in `@apriora/shared`.
+**Rule:** If a type or constant is used by more than one app or package, it belongs in `@kyvio/shared`.
 
-### `@apriora/api-client`
+### `@kyvio/api-client`
 
-Typed HTTP client and Socket.IO client shared between web and mobile. Abstracts the API surface so apps never call `fetch` directly. Depends on `@apriora/shared` for DTOs.
+Typed HTTP client and Socket.IO client shared between web and mobile. Abstracts the API surface so apps never call `fetch` directly. Depends on `@kyvio/shared` for DTOs.
 
 Will be implemented in Phase 6 alongside the API.
 
-### `@apriora/config`
+### `@kyvio/config`
 
 Shared tooling configuration:
 
@@ -232,13 +233,15 @@ Shared tooling configuration:
 - `tsconfig/react-native.json` — extends base for React Native
 - `biome/base.json` — extends root `biome.json` (for per-package overrides if needed)
 
-### `@apriora/ui` — Deferred
+### `@kyvio/ui` — Deferred (components), Planned (design tokens)
 
-**Decision:** Do not implement a shared UI package at this stage.
+**Decision:** Do not implement shared *components* at this stage.
 
 `apps/web` uses Tailwind CSS + shadcn/ui, which are DOM-specific. `apps/mobile` uses React Native, which has no DOM. Bridging these requires non-trivial abstractions (React Native Web, component file splitting, or a design-token-only layer). None of these are justified before the product design is established.
 
-**Re-evaluate in Phase 3** (Software Architecture) once concrete screens exist and patterns emerge. If shared logic is identified at that point, extract it then.
+**Re-evaluate component sharing in Phase 3** (Software Architecture) once concrete screens exist and patterns emerge. If shared logic is identified at that point, extract it then.
+
+**Design-token sharing is still the intended strategy**, independent of component sharing: colors, typography, spacing, radius, and shadows defined once in `@kyvio/ui` and consumed by Tailwind CSS 4 (web) and NativeWind 4 (mobile) configs — see [ADR-002 §1.3](../adr/adr-002-technology-stack.md). Not yet scaffolded: `apps/mobile` has no NativeWind dependency, no native `tailwind.config`, and `packages/ui/src/index.ts` is an empty stub. This is Phase 3 scaffolding work, not a Phase 0 gap left unaddressed by oversight.
 
 ---
 
@@ -252,9 +255,9 @@ pnpm install          # Install all workspace dependencies
 pnpm dev              # Start all apps (Turbo concurrent)
 
 # Scoped starts
-pnpm --filter @apriora/web dev
-pnpm --filter @apriora/api dev
-pnpm --filter @apriora/mobile dev
+pnpm --filter @kyvio/web dev
+pnpm --filter @kyvio/api dev
+pnpm --filter @kyvio/mobile dev
 ```
 
 ### 7.2 Dev Container

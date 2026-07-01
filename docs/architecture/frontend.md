@@ -9,5 +9,6 @@ This document will describe:
 - Client vs. server component strategy
 - State management approach
 - Authentication flow (JWT, middleware)
-- Integration with `@apriora/api-client`
+- Integration with `@kyvio/api-client`
 - Real-time connection management (Socket.IO)
+- Shared design tokens (`@kyvio/ui`) and NativeWind 4 scaffolding for `apps/mobile` — see [engineering-foundation.md §6](../foundation/engineering-foundation.md#6-shared-packages) and [ADR-002 §1.3](../adr/adr-002-technology-stack.md)
