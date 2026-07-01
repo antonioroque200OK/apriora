@@ -17,7 +17,7 @@ importers:
 
   apps/api:
     dependencies:
-      '@apriora/shared':
+      '@kyvio/shared':
         specifier: workspace:*
         version: link:../../packages/shared
     devDependencies:
@@ -33,7 +33,7 @@ importers:
 
   apps/mobile:
     dependencies:
-      '@apriora/shared':
+      '@kyvio/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       expo:
@@ -67,12 +67,12 @@ importers:
 
   apps/web:
     dependencies:
-      '@apriora/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.6.0(@types/react@19.2.17)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@kyvio/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -128,10 +128,13 @@ importers:
 
   packages/api-client:
     dependencies:
-      '@apriora/shared':
+      '@kyvio/shared':
         specifier: workspace:*
         version: link:../shared
     devDependencies:
+      '@types/node':
+        specifier: ^20.19.43
+        version: 20.19.43
       typescript:
         specifier: ^5
         version: 5.9.3

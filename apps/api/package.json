@@ -1,5 +1,5 @@
 {
-  "name": "@apriora/api",
+  "name": "@kyvio/api",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@apriora/shared": "workspace:*"
+    "@kyvio/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20",

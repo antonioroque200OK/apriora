@@ -1,5 +1,5 @@
 {
-  "name": "@apriora/api-client",
+  "name": "@kyvio/api-client",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -13,9 +13,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@apriora/shared": "workspace:*"
+    "@kyvio/shared": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "^20.19.43",
     "typescript": "^5"
   }
 }

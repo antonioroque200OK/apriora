@@ -1,4 +1,4 @@
-# Apriora
+# Kyvio
 
 A Brazilian gamified learning platform — more pedagogical, more teacher-friendly, and better aligned with Brazilian educational workflows.
 
@@ -9,7 +9,7 @@ A Brazilian gamified learning platform — more pedagogical, more teacher-friend
 
 ## Product Vision
 
-Apriora enables teachers to create and run live quiz sessions with real-time student participation, gamified scoring, and detailed post-session reports — designed for the rhythm and culture of Brazilian classrooms.
+Kyvio enables teachers to create and run live quiz sessions with real-time student participation, gamified scoring, and detailed post-session reports — designed for the rhythm and culture of Brazilian classrooms.
 
 **Surfaces:**
 
@@ -22,7 +22,7 @@ Apriora enables teachers to create and run live quiz sessions with real-time stu
 ## Repository Structure
 
 ```text
-apriora/
+kyvio/
 ├── .devcontainer/      # Unified development environment
 ├── .github/
 │   ├── workflows/      # GitHub Actions CI
@@ -85,8 +85,8 @@ Internal packages are linked via the `workspace:*` protocol:
 // apps/web/package.json
 {
   "dependencies": {
-    "@apriora/shared": "workspace:*",
-    "@apriora/api-client": "workspace:*"
+    "@kyvio/shared": "workspace:*",
+    "@kyvio/api-client": "workspace:*"
   }
 }
 ```
@@ -112,9 +112,9 @@ pnpm dev             # Start all apps concurrently
 ### Scoped commands
 
 ```bash
-pnpm --filter @apriora/web dev
-pnpm --filter @apriora/api dev
-pnpm --filter @apriora/mobile dev
+pnpm --filter @kyvio/web dev
+pnpm --filter @kyvio/api dev
+pnpm --filter @kyvio/mobile dev
 ```
 
 ### Quality gates
